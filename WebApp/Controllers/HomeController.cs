@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -16,7 +17,7 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            string accToken = HttpContext.GetTokenAsync("access_token").Result;
+            string accToken = HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken).Result;
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:58461/Test/GetSomething");
 
