@@ -18,8 +18,8 @@ namespace WebApp
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+            .AddCookie()
+            .AddOpenIdConnect(options =>
             {
                 options.Authority = "https://gia-dev3.santepublique.rtss.qc.ca/auth/realms/msss";
                 options.ClientId = "pqdcdev3";
