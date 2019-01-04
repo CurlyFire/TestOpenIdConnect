@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace WebAPI
 {
@@ -15,9 +17,19 @@ namespace WebAPI
             })
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
-                options.Authority = "https://gia-dev3.santepublique.rtss.qc.ca/auth/realms/msss";
-                options.ClaimsIssuer = "pqdcdev3";
-                options.TokenValidationParameters.ValidateAudience = false;
+                //options.Authority = "https://gia-dev3.santepublique.rtss.qc.ca/auth/realms/msss";
+                //options.ClaimsIssuer = "pqdcdev3";
+                //options.TokenValidationParameters.ValidateAudience = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "yourdomain.com",
+                    ValidAudience = "yourdomain.com",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication"))
+                };
             });
 
             services.AddMvc();
